@@ -38,6 +38,7 @@ func main() {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "OK",
 			"health": "UP",
+			"mode":   config.Config.Mode,
 		})
 	})
 
