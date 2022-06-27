@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -28,8 +29,14 @@ func main() {
 
 	port := os.Getenv("PORT")
 
-	if err := router.Run(port); err != nil {
+	if port == "" {
+		log.Fatalf("$PORT must be set")
+	}
+
+	if err := router.Run(":" + port); err != nil {
 		log.Fatal("Error in setup :", err.Error())
 	}
+
+	fmt.Printf("Server listing on port %+v :", port)
 
 }
