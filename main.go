@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,7 +26,9 @@ func main() {
 	router := setupRouter()
 	gin.SetMode(gin.ReleaseMode)
 
-	if err := router.Run(":3000"); err != nil {
+	port := os.Getenv("PORT")
+
+	if err := router.Run(port); err != nil {
 		log.Fatal("Error in setup :", err.Error())
 	}
 
