@@ -9,7 +9,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func setupRouter() *gin.Engine {
+func main() {
+
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		log.Fatalf("$PORT must be set")
+	}
+
+	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 
 	router.GET("/health", func(ctx *gin.Context) {
@@ -19,24 +27,10 @@ func setupRouter() *gin.Engine {
 		})
 	})
 
-	return router
-}
-
-func main() {
-
-	router := setupRouter()
-	gin.SetMode(gin.ReleaseMode)
-
-	port := os.Getenv("PORT")
-
-	if port == "" {
-		log.Fatalf("$PORT must be set")
-	}
-
 	if err := router.Run(":" + port); err != nil {
 		log.Fatal("Error in setup :", err.Error())
 	}
 
-	fmt.Printf("Server listing on port %+v :", port)
+	fmt.Printf("Server runnig on port %+v :", port)
 
 }
