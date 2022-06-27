@@ -24,6 +24,10 @@ func main() {
 	if mode == "release" {
 		filename = "config_prod.json"
 		gin.SetMode(gin.ReleaseMode)
+	} else if mode == "test" {
+		filename = "config_stg.json"
+	} else {
+		mode = "development"
 	}
 
 	err := config.SetupConfig(filename)
@@ -42,10 +46,9 @@ func main() {
 		})
 	})
 
+	fmt.Printf("Running on port %+v : in [ %s ] mode\n", port, mode)
 	if err := router.Run(":" + port); err != nil {
 		log.Fatal("Error in setup :", err.Error())
 	}
-
-	fmt.Printf("Server runnig on port %+v :", port)
 
 }
